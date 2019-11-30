@@ -62,7 +62,8 @@ if [ $(id -u) -eq 0 ]; then
 					if [ $delete ]; then
 						userdel $user
 						if [ $? -eq 0 ]; then echo "The account $user was deleted."; else echo "The account $user could not be deleted."; fi
-					else
+					fi
+					if [ ! $archive ] && [ ! $rd ] && [ ! $delete ]; then
 						usermod -L $user
 						echo "The account $user was disabled."
 					fi
