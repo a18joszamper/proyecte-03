@@ -55,11 +55,11 @@ if [ $(id -u) -eq 0 ]; then
 						echo "Archiving /home/$user to /archive/$user.tgz"
 						tar czvf /archive/$user.tgz /home/$user > /dev/null 2>&1
 					fi
+					if [ $rd ]; then
+						rm -rf /home/$user
+						if [ $? -eq 0 ]; then echo "The directory /home/$user was deleted."; else echo "The directory /home/$user could not be deleted"; fi
+					fi
 					if [ $delete ]; then
-						if [ $rd ]; then
-							rm -rf /home/$user
-							if [ $? -eq 0 ]; then echo "The directory /home/$user was deleted."; else echo "The directory /home/$user could not be deleted"; fi
-						fi
 						userdel $user
 						if [ $? -eq 0 ]; then echo "The account $user was deleted."; else echo "The account $user could not be deleted."; fi
 					else
